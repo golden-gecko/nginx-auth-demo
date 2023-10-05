@@ -1,4 +1,4 @@
-version: '3.2'
+version: "3.8"
 
 services:
 
@@ -15,8 +15,47 @@ services:
     build:
       context: gateway
       dockerfile: Dockerfile
-    depends_on:
-      - auth
     ports:
       - 8000:8000
     restart: unless-stopped
+
+  map:
+    build:
+      context: map
+      dockerfile: Dockerfile
+    command: ng serve --host 0.0.0.0
+    ports:
+      - 4200:4200
+    restart: unless-stopped
+
+  osm:
+    build:
+      context: osm
+      dockerfile: Dockerfile
+    command: run
+    ports:
+      - 2000:80
+      - 5432:5432
+    restart: unless-stopped
+    shm_size: 1g
+    volumes:
+      - osm:/data/database
+
+  overpass:
+    build:
+      context: overpass
+      dockerfile: Dockerfile
+    environment:
+      - OVERPASS_META=yes
+      - OVERPASS_MODE=init
+      - OVERPASS_PLANET_URL=https://download.geofabrik.de/europe/poland/malopolskie-latest.osm.bz2
+      - OVERPASS_RULES_LOAD=10
+    volumes:
+      - overpass:/db
+    image: wiktorn/overpass-api:0.7.56.4
+    ports:
+      - 3000:80
+
+volumes:
+  osm:
+  overpass:
