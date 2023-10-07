@@ -38,7 +38,7 @@ export class MapComponent {
 
   options = {
     layers: [
-      Leaflet.tileLayer('http://localhost:2000/tile/{z}/{x}/{y}.png'),
+      Leaflet.tileLayer('http://localhost:9000/tile/{z}/{x}/{y}.png'),
     ],
     zoom: 8,
     center: { lng: 19.903266, lat: 50.052539 }
