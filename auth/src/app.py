@@ -42,7 +42,7 @@ def token_required(f):
     return decorated
 
 
-@app.route("/auth")
+@app.route("/auth", methods=['GET'])
 @token_required
 def auth():
     data = {
@@ -52,7 +52,7 @@ def auth():
     return data, 200
 
 
-@app.route('/layers')
+@app.route('/layers', methods=['GET'])
 @token_required
 def layers():
     data = {
@@ -62,7 +62,7 @@ def layers():
     return data, 200
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET'])
 def login():
     data = {
         "user_id": 20,
@@ -73,7 +73,7 @@ def login():
     return token, 200
 
 
-@app.route('/logout')
+@app.route('/logout', methods=['GET'])
 def logout():
     data = {
         "logout": 123,

@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+
+  osm_import:
+    build:
+      context: osm
+      dockerfile: Dockerfile
+    command: import
+    volumes:
+      - ./osm/poland-latest.osm.pbf:/data/region.osm.pbf
+      - osm:/data/database
+
+volumes:
+  osm:
