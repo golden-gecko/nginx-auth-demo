@@ -17,7 +17,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8000:8000
+      - 9000:9000
     restart: unless-stopped
+    volumes:
+      - gateway:/data/nginx/cache
 
   map:
     build:
@@ -57,5 +60,6 @@ services:
       - 3000:80
 
 volumes:
+  gateway:
   osm:
   overpass:
