@@ -1,0 +1,22 @@
+version: '3.2'
+
+services:
+
+  auth:
+    build:
+      context: auth
+      dockerfile: Dockerfile
+    command: gunicorn --bind 0.0.0.0:5000 app:app
+    ports:
+      - 5000:5000
+    restart: unless-stopped
+
+  gateway:
+    build:
+      context: gateway
+      dockerfile: Dockerfile
+    depends_on:
+      - auth
+    ports:
+      - 8000:8000
+    restart: unless-stopped
